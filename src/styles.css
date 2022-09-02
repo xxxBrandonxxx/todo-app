@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100%;
+    background-color: skyblue;
+}
+
+.container{
+    width: 30rem;
+    margin: 20rem auto;
+}
+
+.container .form{
+    background-color: #fff;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.form input{
+    flex: 1;
+    padding: 0.7rem;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.form .btn{
+    padding: 00.7rem;
+    background-color: darkblue;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+.list .todo{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fff;
+    padding: 0.5rem;
+}
+
+.todo span{
+    cursor: pointer;
+
+}
