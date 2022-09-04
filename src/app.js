@@ -1,18 +1,21 @@
-// TODO: Get input from UI
-const item = {
-  name: "create todo app",
-  dataCreated: new Date(),
-  isComplete: false,
-  dueDate: undefined,
-};
-const item2 = {
-  name: "take a bath",
-  dataCreated: new Date(),
-  isComplete: false,
-  dueDate: undefined,
-};
+// This array will store items for to=do list
+let todoItems = [];
 
 const checkIdExists = (array, id) => array.find((item) => id === item.id);
+
+//  function to store inputs as objects in Array (todoItems)
+   
+function addToDo (text) {
+  const todo = {
+      text, 
+      checked : false,
+      id: Date.now(),
+  }
+  todoItems.push(todo);
+  localStorage.setItem('rememberData', JSON.stringify(todoItems));
+  renderTasks(todo);
+};
+
 
 class App {
   // TODO ADD CONSTRUCTOR TO READ LOCAL STORAGE
