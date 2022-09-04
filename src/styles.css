@@ -11,7 +11,13 @@ body{
 }
 
 .myImage{
-    width: 90%;
+    width: 92%;
+    border-radius: 6px;
+}
+.socialIcons{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
 }
 
 .container{
