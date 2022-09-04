@@ -16,20 +16,28 @@ function addToDo (text) {
   renderTasks(todo);
 };
 
+// Deleting items on the Dom using a function
+function deleteTodo(key) {
+  const index = todoItems.findIndex(item => item.id === Number(key));
+  const todo = {
+      deleted: true,
+      ...todoItems[index]
+  };
+  todoItems = todoItems.filter(item => item.id !== Number(key));
+  localStorage.setItem('rememberData', JSON.stringify(todoItems));
+  renderTasks(todo);
+};
 
-class App {
-  // TODO ADD CONSTRUCTOR TO READ LOCAL STORAGE
-  items = [];
-  constructor() {}
-  // CRUD
-  addTodo(newTodo = {}) {
-    const _newTodo = { ...newTodo, id: this.items.length };
-    this.items.push(_newTodo);
-  }
-  get todos() {
-    // Read local storage
-    return this.items;
-  }
+// checkmark click eventlistner function
+   
+function toggleComplete(key) {
+  const index = todoItems.findIndex(item => item.id === Number(key));
+  todoItems[index].checked = !todoItems[index].checked;
+  renderTasks(todoItems[index]);
+};
+
+
+
   updateTodo(updatedTodo = {}) {
     // Do validation first
     // 1st make sure todo with id exists
@@ -52,14 +60,14 @@ class App {
       this.items = array;
     }
     this.transact();
-  }
+  };
   transact() {
     //   TODO: Write data to localStorage
     localStorage.setItem("todos", this.items);
     console.log(this.items);
     // TODO: Update the UI with new data
-  }
-}
+  };
+
 
 const myApp = new App();
 
