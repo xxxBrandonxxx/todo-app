@@ -38,52 +38,69 @@ function toggleComplete(key) {
 
 
 
-  updateTodo(updatedTodo = {}) {
-    // Do validation first
-    // 1st make sure todo with id exists
-    const array = this.items;
-    const isIdValid = checkIdExists(array, updatedTodo.id);
-    if (!isIdValid) {
-      //TODO: Render this feedback;
-      console.log(`Todo with id ${updatedTodo.id} not found`);
-      return;
+const form = document.querySelector('.todoForm');
+
+// Added event listener for form submit, and added some functionality to remove any white-space if left in the input field
+form.addEventListener('submit', event => {
+    event.preventDefault();                 // Prevent form from trying to submit to server
+    const input = document.querySelector('.todoInput');
+    const text = input.value.trim();
+    if (text !== '') {
+        addToDo(text);
+        input.value = '';
+        input.focus();
+    }
+});
+
+function renderTasks(todo) {
+    const list = document.querySelector('.todo-list');
+    const item = document.querySelector(`[data-key='${todo.id}']`);
+    if (todo.deleted) {
+        item.remove();
+        if (todoItems.length === 0) list.innerHTML = '';
+        return;
+    }
+    const isChecked = todo.checked ? 'completed': '';
+    const liNode = document.createElement('li');
+    liNode.setAttribute('class', `todo-item ${isChecked}`);
+    liNode.setAttribute('data-key', todo.id);
+    liNode.innerHTML = `
+    <input id="${todo.id}" type="checkbox" />
+    <label for="${todo.id}" class="tick js-tick"></label>
+    <span>${todo.text}</span>
+    <button class="delete-todo js-delete-todo">
+    <svg><use href=#delete-icon"></use></svg>
+    </button>
+    `;
+    // If item is in DOM already, either replace it so that no duplication occures or append to end of list
+    if (item) {
+        list.replaceChild(liNode, item);
     } else {
-      this.items[updatedTodo.id] = updatedTodo;
-      this.transact();
-      //call transact to update dom
+        list.append(liNode);
     }
-  }
-  deleteTodo(id = undefined) {
-    const isIdValid = checkIdExists(this.items, id);
-    if (isIdValid) {
-      const array = this.items.splice(id - 1, 1);
-      this.items = array;
+}
+
+// Listen for and apply checkmark as well as delete button listener
+
+const list = document.querySelector('.js-todo-list');
+list.addEventListener('click', event => {
+    if (event.target.classList.contains('js-tick')) {
+        const itemKey = event.target.parentElement.dataset.key;
+        toggleComplete(itemKey);
     }
-    this.transact();
-  };
-  transact() {
-    //   TODO: Write data to localStorage
-    localStorage.setItem("todos", this.items);
-    console.log(this.items);
-    // TODO: Update the UI with new data
-  };
+    if (event.target.classList.contains('js-delete-todo')) {
+        const itemKey = event.target.parentElement.dataset.key;
+        deleteTodo(itemKey);
+    }
+});
 
-
-const myApp = new App();
-
-myApp.addTodo(item);
-myApp.addTodo(item2);
-// console.log(myApp.todos);
-console.log("NEW TODOS");
-const updatedItem = {
-  id: 1,
-  name: "take a long relaxing bath",
-  dataCreated: new Date(),
-  isComplete: false,
-  dueDate: undefined,
-};
-
-myApp.updateTodo(updatedItem);
-myApp.deleteTodo(1);
-
-// console.log(myApp.todos);
+// Listener to Access LocalStorage and update the DOM if necessary
+document.addEventListener('DOMContentLoaded', () => {
+    const loadData = localStorage.getItem('rememberData');
+    if (loadData) {
+        todoItems = JSON.parse(loadData);
+        todoItems.forEach (r => {
+            renderTasks(r);
+        });
+    }
+});
