@@ -9,14 +9,14 @@ let todos = [];
 // FORM SUBMIT PREVENT PAGE FROM REFRESHING ON NORMAL SUBMIT
 form.addEventListener('submit', function (event) {
   event.preventDefault();
-  
+
   saveTodo();
   renderTodos();
 });
 
 // SAVING TODO'S
-function saveTodo() {
-  const todoValue = todoInput.ariaValue
+function saveTodo(){
+  const todoValue = todoInput.value
 
   //ADDING ERRORS
   //CHECK IF THE TODO IS EMPTY SHOW ERROR
@@ -33,11 +33,11 @@ function saveTodo() {
   }
   else {    
     todos.push({
-      value: todoValue,
-      checked: false,
+      value : todoValue,
+      checked : false,
 
   //RANDOMIZING EACH TODO COLOR ON LIST
-      color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+      color : '#' + Math.floor(Math.random() * 16777215).toString(16)
     });
 
   //CLEAR FIELD AFTER SUBMITTING TODO
@@ -47,6 +47,18 @@ function saveTodo() {
 
 // RENDERING TODO'S ON DOM  
 function renderTodos(){
-
+  todos.forEach((todo, index) => {
+    todoListElements.innerHTML += `
+    <div class="todo" id=${index}>
+      <i
+       class="bi ${todo.checked ? 'bi-check-circle-fill' : 'bi-circle'}";
+       style="color : ${todo.color}"
+      ></i>
+      <p class="">${todo.value}</p>
+      <i class="bi bi-pencil-square"></i>
+      <i class="bi bi-trash"></i>
+  </div>
+    `;
+  });
 }
 
