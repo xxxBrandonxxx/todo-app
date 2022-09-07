@@ -45,8 +45,12 @@ function saveTodo(){
   }
 }
 
-// RENDERING TODO'S ON DOM  
+
 function renderTodos(){
+//CLEARING ELEMENTS BEFORE A RE-RENDER
+  todoListElements.innerHTML = "";
+
+// RENDER TODO'S
   todos.forEach((todo, index) => {
     todoListElements.innerHTML += `
     <div class="todo" id=${index}>
@@ -62,3 +66,15 @@ function renderTodos(){
   });
 }
 
+//CLICK EVENT LISTENER FOR ALL THE TODO'S
+todoListElements.addEventListener('click', (event) => {
+  const target = event.target;
+  const parentEl = target.parentNode;
+
+  if(parentEl.className !== 'todo') return;
+
+  const todo = parentEl;
+  const todoId = Number(todo.id);
+
+console.log(todoId);
+})
