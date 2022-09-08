@@ -5,6 +5,7 @@ const todoListElements = document.getElementById('todos-list')
 
 // ARRAY FOR ---SAVING TODOS---
 let todos = [];
+let EditTodoId = -1;
 
 // FORM SUBMIT PREVENT PAGE FROM REFRESHING ON NORMAL SUBMIT
 form.addEventListener('submit', function (event) {
@@ -32,18 +33,27 @@ function saveTodo() {
     alert('todo already exists')
   }
   else {
-    todos.push({
-      value: todoValue,
-      checked: false,
+    if (EditTodoId >= 0) {
+      //UPDATE THE EDITED TODO
+      todos = todos.map((todo, index) => ({
+        ...todo,
+        value: index === EditTodoId ? todoValue : todo.value
+      }));
+      EditTodoId = -1;
+    } else {
+      todos.push({
+        value: todoValue,
+        checked: false,
 
-      //RANDOMIZING EACH TODO COLOR ON LIST
-      color: '#' + Math.floor(Math.random() * 16777215).toString(16)
-    });
+        //RANDOMIZING EACH TODO COLOR ON LIST
+        color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+      });
+ }
 
     //CLEAR FIELD AFTER SUBMITTING TODO
     todoInput.value = '';
   }
-}
+};
 
 
 function renderTodos() {
@@ -82,7 +92,7 @@ todoListElements.addEventListener('click', (event) => {
   const action = target.dataset.action
 
   action === "check" && checkTodo(todoId);
-  //action === "edit" && editTodo(todoId);
+  action === "edit" && editTodo(todoId);
   //action === "delete" && deleteTodo(todoId);
 
 });
@@ -98,3 +108,8 @@ function checkTodo(todoId) {
   renderTodos();
 }
 
+//EDIT A TODO
+function editTodo(todoId) {
+  todoInput.value = todos[todoId].value;
+  EditTodoId = todoId;
+}
