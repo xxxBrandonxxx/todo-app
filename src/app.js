@@ -15,7 +15,7 @@ form.addEventListener('submit', function (event) {
 });
 
 // SAVING TODO'S
-function saveTodo(){
+function saveTodo() {
   const todoValue = todoInput.value
 
   //ADDING ERRORS
@@ -28,39 +28,40 @@ function saveTodo(){
 
   if (isEmpty) {
     alert("todo's input is empty");
-  } else if(isDuplicate){
+  } else if (isDuplicate) {
     alert('todo already exists')
   }
-  else {    
+  else {
     todos.push({
-      value : todoValue,
-      checked : false,
+      value: todoValue,
+      checked: false,
 
-  //RANDOMIZING EACH TODO COLOR ON LIST
-      color : '#' + Math.floor(Math.random() * 16777215).toString(16)
+      //RANDOMIZING EACH TODO COLOR ON LIST
+      color: '#' + Math.floor(Math.random() * 16777215).toString(16)
     });
 
-  //CLEAR FIELD AFTER SUBMITTING TODO
+    //CLEAR FIELD AFTER SUBMITTING TODO
     todoInput.value = '';
   }
 }
 
 
-function renderTodos(){
-//CLEARING ELEMENTS BEFORE A RE-RENDER
+function renderTodos() {
+  //CLEARING ELEMENTS BEFORE A RE-RENDER
   todoListElements.innerHTML = "";
 
-// RENDER TODO'S
+  // RENDER TODO'S
   todos.forEach((todo, index) => {
     todoListElements.innerHTML += `
     <div class="todo" id=${index}>
       <i
        class="bi ${todo.checked ? 'bi-check-circle-fill' : 'bi-circle'}";
        style="color : ${todo.color}"
+       data-action="check"
       ></i>
-      <p class="">${todo.value}</p>
-      <i class="bi bi-pencil-square"></i>
-      <i class="bi bi-trash"></i>
+      <p class="" data-action="check">${todo.value}</p>
+      <i class="bi bi-pencil-square" data-action="edit"></i>
+      <i class="bi bi-trash" data-action="delete"></i>
   </div>
     `;
   });
@@ -71,10 +72,29 @@ todoListElements.addEventListener('click', (event) => {
   const target = event.target;
   const parentEl = target.parentNode;
 
-  if(parentEl.className !== 'todo') return;
+  if (parentEl.className !== 'todo') return;
 
+  //TODO ID
   const todo = parentEl;
   const todoId = Number(todo.id);
 
-console.log(todoId);
-})
+  // TARGET ACTION  
+  const action = target.dataset.action
+
+  action === "check" && checkTodo(todoId);
+  //action === "edit" && editTodo(todoId);
+  //action === "delete" && deleteTodo(todoId);
+
+});
+
+//CHECK A TODO (SELECTING)
+function checkTodo(todoId) {
+  todos = todos.map((todo, index) =>
+  ({
+    ...todo,
+    checked: index === todoId ? !todo.checked : todo.checked
+  }));
+
+  renderTodos();
+}
+
