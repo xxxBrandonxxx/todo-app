@@ -1,11 +1,15 @@
 // SELECTING THE FORM ELEMENTS
-const form = document.getElementById('todoform')
-const todoInput = document.getElementById('newtodo')
-const todoListElements = document.getElementById('todos-list')
+const form = document.getElementById('todoform');
+const todoInput = document.getElementById('newtodo');
+const todoListElements = document.getElementById('todos-list');
+const notificationElement = document.querySelector('.notification')
 
-// ARRAY FOR ---SAVING TODOS---
-let todos = [];
+// variables ---SAVING TODOS---
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
 let EditTodoId = -1;
+
+//FIRST RENDER
+renderTodos();
 
 // FORM SUBMIT PREVENT PAGE FROM REFRESHING ON NORMAL SUBMIT
 form.addEventListener('submit', function (event) {
@@ -13,6 +17,8 @@ form.addEventListener('submit', function (event) {
 
   saveTodo();
   renderTodos();
+  localStorage.setItem('todos', JSON.stringify(todos))
+
 });
 
 // SAVING TODO'S
@@ -28,9 +34,9 @@ function saveTodo() {
     todos.some((todo) => todo.value.toUpperCase() === todoValue.toUpperCase());
 
   if (isEmpty) {
-    alert("todo's input is empty");
+    showNotification("todo's input is empty");
   } else if (isDuplicate) {
-    alert('todo already exists')
+    showNotification('todo already exists')
   }
   else {
     if (EditTodoId >= 0) {
@@ -48,7 +54,7 @@ function saveTodo() {
         //RANDOMIZING EACH TODO COLOR ON LIST
         color: '#' + Math.floor(Math.random() * 16777215).toString(16)
       });
- }
+    }
 
     //CLEAR FIELD AFTER SUBMITTING TODO
     todoInput.value = '';
@@ -69,7 +75,7 @@ function renderTodos() {
        style="color : ${todo.color}"
        data-action="check"
       ></i>
-      <p class="" data-action="check">${todo.value}</p>
+      <p class="${todo.checked ? 'checked' : ''}" data-action="check">${todo.value}</p>
       <i class="bi bi-pencil-square" data-action="edit"></i>
       <i class="bi bi-trash" data-action="delete"></i>
   </div>
@@ -106,6 +112,7 @@ function checkTodo(todoId) {
   }));
 
   renderTodos();
+  localStorage.setItem('todos', JSON.stringify(todos))
 }
 
 //EDIT A TODO
@@ -119,6 +126,19 @@ function deleteTodo(todoId) {
   todos = todos.filter((todo, index) => index !== todoId);
   EditTodoId = -1;
 
-//RE-RENDER TODO'S
-renderTodos();
+  //RE-RENDER TODO'S
+  renderTodos();
+  localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+ // SHOW NOTIFICATION ERROR ON DOM
+function showNotification(msg) {
+  //  CHANGE THE MESSAGE
+  notificationElement.innerHTML = msg;
+  //  NOTIFICATION ENTER
+  notificationElement.classList.add('notif-enter');
+  // REMOVE NOTIFICATION AFTER 2 SEC
+  setTimeout(() => {
+    notificationElement.classList.remove('notif-enter')
+  }, 2000)
 }
