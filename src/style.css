@@ -28,7 +28,6 @@ html {
 body {
   background-image: url(images/background.jpg);
   width: 100vw;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +51,7 @@ header {
 }
 
 .header {
-  height: 100px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,6 +68,7 @@ input[type="date"]{
   padding: 5px;
   font-family: 'Open Sans', sans-serif;
   font-family: 'Poppins', sans-serif;
+  padding-left: 1rem;
 }
 
 
@@ -80,12 +80,11 @@ input[type="date"]{
 
 .new-todo form input {
   flex: 1;
+  flex-direction: column;
   height: 40px;
-  background-color: transparent;
   border: none;
   border-right: 0px;
-  outline: transparent;
-  padding-left: 0.5rem;
+  padding-left: 1rem;
   font-size: 1rem;
   color: rgb(0, 0, 0);
 }
