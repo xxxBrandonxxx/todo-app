@@ -139,7 +139,8 @@ header {
 
 .notification {
   position: absolute;
-  width: calc(--container-width);
+  width: calc(3 * var(--contaier-width) / 4);
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -147,7 +148,7 @@ header {
   border-radius: 8px;
   background-color: rgb(255, 0, 0);
   top: 10px;
-  right: calc(--container-width);
+  right: calc(-3 * var(--contaier-width) / 4);
   color: rgb(12, 8, 8);
   transition: 300ms right ease-in-out;
 }

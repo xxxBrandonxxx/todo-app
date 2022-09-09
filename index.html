@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="src/style.css">
     <!-- JavaScript sheet -->
     <script src="src/app.js" defer></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins:wght@200;300&display=swap"
@@ -44,14 +43,17 @@
                 </form>
             </div>
         </header>
+        <!-- Only added this code below Tried to refactor everything but ran out of time 
+    on Friday for Ascending and Descending todos-->
+
         <div class="action-bar" id="action-bar">
             <i class="bi bi-three-dots toggleActions" onclick="toggleActions()"></i>
             <div class="action-box" id="action-box">
-                <div class="action-item" onclick="sort('asc'); toggleActions()">
+                <div class="action-item" onclick="sort('Ascending'); toggleActions()">
                     <i class="bi bi-sort-alpha-down"></i>
                     <span>Sort Asc</span>
                 </div>
-                <div class="action-item" onclick="sort('desc'); toggleActions()">
+                <div class="action-item" onclick="sort('Descending'); toggleActions()">
                     <i class="bi bi-sort-alpha-up"></i>
                     <span>Sort Desc</span>
                 </div>
@@ -63,9 +65,11 @@
         </div>
         <div>
             <div id="todos-list">
+
                 <!-- Render todos dynamically via JS -->
             </div>
-            <div class="notification"></div>
+            <div class="notification">
+            </div>
         </div>
     </div><br>
 
@@ -77,11 +81,8 @@
             <a href="https://github.com/xxxBrandonxxx" target="_blank"><img src="src/images/Github_black.png"
                     id="githubIcon" alt="github Logo" width="50px" height="50px"></a>
         </div><br><br>
-        <p>&copy; 2017–2022 Brandon Company, Inc. &middot;
+        <p> &copy; 2017–2022 Brandon Company, Inc. &middot;
     </footer>
 
 </body>
-</html>
-</body>
-
 </html>

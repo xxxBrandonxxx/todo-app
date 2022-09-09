@@ -14,7 +14,7 @@ showActionBox = false;
 todaysDate = new Date().toISOString().split('T');
 dueDate.min = todaysDate[0]
 
-// variables ---SAVING TODOS---
+// VARIABLES FOR ---SAVING TODOS---
 let todos = JSON.parse(localStorage.getItem('todos')) || [];
 let EditTodoId = -1;
 
@@ -46,14 +46,12 @@ function saveTodo() {
   //CHECK FOR DUPLICATE TODO'S SHOW ERROR
   const isDuplicate = todos.some((todo) => todo.value.toUpperCase() === todoValue.toUpperCase());
 
-  if (isEmpty) {
-    showNotification("todo's input is empty");
-  }
-  else if (isDuplicate) {
+  if (isDuplicate) {
     showNotification('todo already exists')
   }
   else {
     if (EditTodoId >= 0) {
+
       //UPDATE THE EDITED TODO
       todos = todos.map((todo, index) => ({
         ...todo,
@@ -125,29 +123,27 @@ function renderTodos() {
 //SORTING ALPHABETICALLY
 const sort = (direction) => {
   todos = todos
-  .sort((currentTodo, nextTodo) =>{
-    
-    // get first character of the todo (1st item and 2nd item in 1 loop)
-    let firstCharacterOfCurrent = currentTodo.value.charAt(0);
-    let firstCharacterOfNext = nextTodo.value.charAt(0);
+    .sort((currentTodo, nextTodo) => {
 
-    // convert first character to a numeric equivalent
-    let alphaNumericConversion1 = firstCharacterOfCurrent.charCodeAt(0) - 97;
-    let alphaNumericConversion2 = firstCharacterOfNext.charCodeAt(0) - 97;
+      //    GET FIRST CHARACTER OF THE TODO (1ST ITEM AND 2ND ITEM IN 1 LOOP)
+      let firstCharacterOfCurrent = currentTodo.value.charAt(0);
+      let firstCharacterOfNext = nextTodo.value.charAt(0);
 
-    // check if numeric value is lower than the 2nd item in the loop
-    if (direction === 'asc') {
-      if (alphaNumericConversion1 > alphaNumericConversion2) {return 1; }
-      if (alphaNumericConversion1 < alphaNumericConversion2) {return -1; }
-    } 
-    else if (direction === 'desc') {
-      if (alphaNumericConversion1 < alphaNumericConversion2) {return 1; }
-      if (alphaNumericConversion1 > alphaNumericConversion2) {return -1; }
-    }
-    
+      // CONVERT FIRST CHARACTER TO A NUMERIC EQUIVALENT
+      let alphaNumericConversion1 = firstCharacterOfCurrent.charCodeAt(0) - 97;
+      let alphaNumericConversion2 = firstCharacterOfNext.charCodeAt(0) - 97;
 
-    return 0;
-  });
+      // CHECK IF NUMERIC VALUE IS LOWER THAN THE 2ND ITEM IN THE LOOP
+      if (direction === 'Ascending') {
+        if (alphaNumericConversion1 > alphaNumericConversion2) { return 1; }
+        if (alphaNumericConversion1 < alphaNumericConversion2) { return -1; }
+      }
+      else if (direction === 'Descending') {
+        if (alphaNumericConversion1 < alphaNumericConversion2) { return 1; }
+        if (alphaNumericConversion1 > alphaNumericConversion2) { return -1; }
+      }
+      return 0;
+    });
 
   localStorage.setItem('todos', JSON.stringify(todos));
   renderTodos();
