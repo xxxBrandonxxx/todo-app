@@ -7,6 +7,7 @@ const dueDate = document.getElementById('DueDate');
 const actionBar = document.getElementById('action-bar');
 const actionBox = document.getElementById('action-box');
 
+// SHOWACTION IS FOR TOGGLEACTION IN index.html
 showActionBox = false;
 
 //DUE DATE

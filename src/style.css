@@ -52,8 +52,6 @@ h2 {
 }
 
 header {
-  /* background-image: url(images/todo\ back.jpg); */
-  /* background-size: cover; */
   background-color: rgb(241, 239, 239);
   border-radius: 5px 5px 0 0;
   padding: 1rem;
@@ -133,6 +131,10 @@ header {
 #todos-list .todo .bi-trash {
   color: rgb(236, 82, 82);
   margin: 0;
+}
+
+.deleteAll {
+  color: rgb(243, 82, 82);
 }
 
 .notification {
@@ -253,10 +255,6 @@ input {
 
 .action-item:focus {
   background-color: rgb(117, 117, 117);
-}
-
-.deleteAll {
-  color: rgb(243, 82, 82);
 }
 
 /* REUSABLE CSS */

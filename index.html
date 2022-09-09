@@ -19,7 +19,6 @@
         rel="stylesheet">
 </head>
 
-
 <body class="flex-center">
     <div class="container">
         <header class="w-full">
@@ -31,19 +30,18 @@
                     <div>
                         <div class="input-box">
                             <label for="newtodo">Todo</label>
-                            <input type="text" name="newtodo" id="newtodo" required placeholder="What are you planning today?" />
+                            <input type="text" name="newtodo" id="newtodo" required
+                                placeholder="What are you planning today?" />
                         </div>
                         <div class="input-box">
                             <label for="newtodo">Due Date</label>
                             <input type="date" name="date" id="DueDate" required />
                         </div>
                     </div>
-
                     <button type="submit" class="flex-center" id="saveButton">
                         +
                     </button>
                 </form>
-                
             </div>
         </header>
         <div class="action-bar" id="action-bar">
@@ -62,12 +60,11 @@
                     <span>Delete all tasks</span>
                 </div>
             </div>
-            <!-- <button id="sort" onclick="sort()">
-                <i class="bi bi-sort-alpha-down"></i>
-            </button> -->
         </div>
         <div>
-            <div id="todos-list"><!-- Render todos dynamically via JS --></div>
+            <div id="todos-list">
+                <!-- Render todos dynamically via JS -->
+            </div>
             <div class="notification"></div>
         </div>
     </div><br>
@@ -82,8 +79,8 @@
         </div><br><br>
         <p>&copy; 2017–2022 Brandon Company, Inc. &middot;
     </footer>
-</body>
 
+</body>
 </html>
 </body>
 
