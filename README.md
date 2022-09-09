@@ -16,7 +16,7 @@ Just run index.html after Download
 * Javascript
 
 ## Description
-A application to plan all your Tasks for the next 1000 years
+A application to plan all your Tasks.
 
 Author
 Brandon Jansen Van vuuren

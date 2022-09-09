@@ -27,25 +27,49 @@
                 <h2>Todo Application</h2>
             </div>
             <div class="new-todo w-full">
-                <form id="todoform" class="flex-center">
-                    <input type="text" name="newtodo" id="newtodo" placeholder="What are you planning today?" />
-                    <button type="submit">
-                        <i class="bi bi-plus-circle-fill"></i>
+                <form id="todoform" class="flex-between">
+                    <div>
+                        <div class="input-box">
+                            <label for="newtodo">Todo</label>
+                            <input type="text" name="newtodo" id="newtodo" required placeholder="What are you planning today?" />
+                        </div>
+                        <div class="input-box">
+                            <label for="newtodo">Due Date</label>
+                            <input type="date" name="date" id="DueDate" required />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="flex-center" id="saveButton">
+                        +
                     </button>
                 </form>
-                <input type="date" name="date" id="DueDate" required />
+                
             </div>
         </header>
-        <div id="todos-list">
-            <!-- <div class="todo" id="0">
-        <i class="bi bi-circle"></i>
-        <i class="bi bi-check-circle-fill"></i>
-        <p class="">Go get milk.</p>
-        <i class="bi bi-pencil-square"></i>
-        <i class="bi bi-trash"></i>
-      </div> -->
+        <div class="action-bar" id="action-bar">
+            <i class="bi bi-three-dots toggleActions" onclick="toggleActions()"></i>
+            <div class="action-box" id="action-box">
+                <div class="action-item" onclick="sort('asc'); toggleActions()">
+                    <i class="bi bi-sort-alpha-down"></i>
+                    <span>Sort Asc</span>
+                </div>
+                <div class="action-item" onclick="sort('desc'); toggleActions()">
+                    <i class="bi bi-sort-alpha-up"></i>
+                    <span>Sort Desc</span>
+                </div>
+                <div class="action-item" onclick="deleteAll(); toggleActions()">
+                    <i class="bi bi-trash deleteAll"></i>
+                    <span>Delete all tasks</span>
+                </div>
+            </div>
+            <!-- <button id="sort" onclick="sort()">
+                <i class="bi bi-sort-alpha-down"></i>
+            </button> -->
         </div>
-        <div class="notification"></div>
+        <div>
+            <div id="todos-list"><!-- Render todos dynamically via JS --></div>
+            <div class="notification"></div>
+        </div>
     </div><br>
 
     <footer>

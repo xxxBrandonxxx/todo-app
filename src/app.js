@@ -3,7 +3,11 @@ const form = document.getElementById('todoform');
 const todoInput = document.getElementById('newtodo');
 const todoListElements = document.getElementById('todos-list');
 const notificationElement = document.querySelector('.notification')
-const dueDate = document.getElementById('DueDate')
+const dueDate = document.getElementById('DueDate');
+const actionBar = document.getElementById('action-bar');
+const actionBox = document.getElementById('action-box');
+
+showActionBox = false;
 
 //DUE DATE
 todaysDate = new Date().toISOString().split('T');
@@ -72,6 +76,19 @@ function saveTodo() {
   }
 };
 
+toggleActions = () => {
+  if (showActionBox) actionBox.classList.remove('open');
+  else actionBox.classList.add('open');
+
+  showActionBox = !showActionBox;
+}
+
+deleteAll = () => {
+  todos = [];
+  localStorage.setItem('todos', JSON.stringify(todos))
+  renderTodos();
+}
+
 function resetInputs() {
   todoInput.value = '';
   dueDate.value = ''
@@ -80,6 +97,9 @@ function resetInputs() {
 function renderTodos() {
   //CLEARING ELEMENTS BEFORE A RE-RENDER
   todoListElements.innerHTML = "";
+
+  if (todos.length > 0) actionBar.style.display = 'flex';
+  else actionBar.style.display = 'none';
 
   // RENDER TODO'S
   todos.forEach((todo, index) => {
@@ -90,13 +110,46 @@ function renderTodos() {
        style="color : ${todo.color}"
        data-action="check"
       ></i>
-      <p class="${todo.checked ? 'checked' : ''}" data-action="check">${todo.value}</p>
-      <span>${todo.date}</span>
-      <i class="bi bi-pencil-square" data-action="edit"></i>
+      <div>
+        <p class="${todo.checked ? 'checked' : ''}" data-action="check">${todo.value}</p>
+        <small>${todo.date}</small>
+      </div>
+      <i class="bi bi-pencil-square ml-auto" data-action="edit"></i>
       <i class="bi bi-trash" data-action="delete"></i>
   </div>
     `;
   });
+}
+
+//SORTING ALPHABETICALLY
+const sort = (direction) => {
+  todos = todos
+  .sort((currentTodo, nextTodo) =>{
+    
+    // get first character of the todo (1st item and 2nd item in 1 loop)
+    let firstCharacterOfCurrent = currentTodo.value.charAt(0);
+    let firstCharacterOfNext = nextTodo.value.charAt(0);
+
+    // convert first character to a numeric equivalent
+    let alphaNumericConversion1 = firstCharacterOfCurrent.charCodeAt(0) - 97;
+    let alphaNumericConversion2 = firstCharacterOfNext.charCodeAt(0) - 97;
+
+    // check if numeric value is lower than the 2nd item in the loop
+    if (direction === 'asc') {
+      if (alphaNumericConversion1 > alphaNumericConversion2) {return 1; }
+      if (alphaNumericConversion1 < alphaNumericConversion2) {return -1; }
+    } 
+    else if (direction === 'desc') {
+      if (alphaNumericConversion1 < alphaNumericConversion2) {return 1; }
+      if (alphaNumericConversion1 > alphaNumericConversion2) {return -1; }
+    }
+    
+
+    return 0;
+  });
+
+  localStorage.setItem('todos', JSON.stringify(todos));
+  renderTodos();
 }
 
 //CLICK EVENT LISTENER FOR ALL THE TODO'S
